@@ -1,44 +1,61 @@
 import { useQuery } from "react-query";
-import { TextField } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import { Character, GetCharacterResults } from "../../types";
-import YouTubeCard from "../YouTubeCard";
+import SearchBox from "../SearchBox";
+import { useState } from "react";
+import youtube from "../../apis/youtube";
+import VideoList from "../VideoList";
+import VideoDetail from "../VideoDetail";
+import env from "react-dotenv";
 import "./App.css";
 
 function App() {
-  const fetchCharacters = async (url: string) => {
-    const req = await fetch(url);
-    if (!req.ok) {
-      throw new Error("Problem fetching data");
+  // const fetchCharacters = async (url: string) => {
+  //   const req = await fetch(url);
+  //   if (!req.ok) {
+  //     throw new Error("Problem fetching data");
+  //   }
+  //   const { results }: GetCharacterResults = await req.json();
+  //   return results;
+  // };
+
+  // const { data, isLoading, isError, error } = useQuery<Character[], Error>(
+  //   "fetchData",
+  //   async () =>
+  //     fetchCharacters("https://rickandmortyapi.com/api/character/?page=1")
+  // );
+
+  // if (isLoading) return <div>Loading...</div>;
+  // if (isError) return <div>Error occured: {error!.message}</div>;
+
+  const [videos, setVideos] = useState<any>([]);
+  const [selectedVideo, setSelectedVideo] = useState<any>(null);
+  const [error, setError] = useState<any>(null);
+
+  const handleSubmit = async (termFromSearchBar: any) => {
+    try {
+      const response = await youtube.get("/search", {
+        params: {
+          query: termFromSearchBar,
+        },
+      });
+      setVideos(response.data.items);
+      console.log("this is resp: ", response);
+    } catch (err) {
+      setError(err);
     }
-    const { results }: GetCharacterResults = await req.json();
-    return results;
   };
 
-  // 'https://www.googleapis.com/yourube/vs/'
-  // headers: {
-  //     'X-API-KEY': 'apikey',
-  //     'Accept': 'application/json',
-  //     'Content-Type': 'application/json'
-  // },
+  const handleVideoSelect = (video: any) => {
+    setSelectedVideo(video);
+  };
 
-  const { data, isLoading, isError, error } = useQuery<Character[], Error>(
-    "fetchData",
-    async () =>
-      fetchCharacters("https://rickandmortyapi.com/api/character/?page=1")
-  );
-
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error occured: {error!.message}</div>;
+  if (error) return <div>{error.message}</div>;
 
   return (
     <div className="App">
       <h1>YouTube API App</h1>
-      <TextField id="outlined-basic" label="Outlined" variant="outlined" />
-      <SearchIcon />
-      {data?.map((character) => {
-        return <YouTubeCard key={character.id} character={character} />;
-      })}
+      <SearchBox handleFormSubmit={handleSubmit} />
+      <VideoDetail video={selectedVideo} />
+      <VideoList handleVideoSelect={handleVideoSelect} videos={videos} />
     </div>
   );
 }
