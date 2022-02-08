@@ -3,7 +3,15 @@ import { TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import "./SearchBox.css";
 
-function SearchBox({ handleFormSubmit, term, setTerm }: any) {
+function SearchBox({
+  handleFormSubmit,
+  term,
+  setTerm,
+}: {
+  handleFormSubmit: Function;
+  term: string;
+  setTerm: Function;
+}) {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTerm(e.target.value);
   };
@@ -18,7 +26,7 @@ function SearchBox({ handleFormSubmit, term, setTerm }: any) {
           onChange={handleChange}
           value={term}
           id="outlined-basic"
-          label="Outlined"
+          label="Search videos..."
           variant="outlined"
         />
         <SearchIcon

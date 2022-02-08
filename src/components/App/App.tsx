@@ -4,9 +4,9 @@ import { useState } from "react";
 import youtube from "../../apis/youtube";
 import VideoList from "../VideoList";
 import VideoDetail from "../VideoDetail";
-import "./App.css";
 import { Video } from "../../types/types";
 import { Item } from "../../types/types";
+import "./App.css";
 
 function App() {
   // const fetchCharacters = async (url: string) => {
@@ -41,12 +41,10 @@ function App() {
         },
       });
       setVideos(response.data.items);
-      console.log(response.data.items);
-      console.log(response.data.items);
-      console.log(JSON.stringify(response));
       console.log("this is resp: ", response);
     } catch (err) {
       setError(err);
+      console.log(typeof error);
     }
   };
 

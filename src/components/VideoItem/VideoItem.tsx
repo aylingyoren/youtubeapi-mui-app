@@ -3,8 +3,15 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
+import { Video } from "../../types/types";
 
-function VideoItem({ video, handleVideoSelect }: any) {
+function VideoItem({
+  video,
+  handleVideoSelect,
+}: {
+  video: Video;
+  handleVideoSelect: Function;
+}) {
   return (
     <Card onClick={() => handleVideoSelect(video)} sx={{ maxWidth: 345 }}>
       <CardActionArea>
@@ -20,6 +27,8 @@ function VideoItem({ video, handleVideoSelect }: any) {
           <Typography variant="body2" color="text.secondary">
             {video.snippet.description}
           </Typography>
+          <p>{video.snippet.channelTitle}</p>
+          <p>{video.snippet.publishedAt}</p>
         </CardContent>
       </CardActionArea>
     </Card>

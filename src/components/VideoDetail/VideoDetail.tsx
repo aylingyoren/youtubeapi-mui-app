@@ -1,25 +1,16 @@
 import React from "react";
+import { Video } from "../../types/types";
 
-function VideoDetail({ video }: any) {
+function VideoDetail({ video }: { video: Video | null }) {
   if (!video) {
     return (
       <div>
-        <h1>Enter search keyword to load...</h1>
-        <br></br>
-        <p style={{ fontSize: "25px" }}>
-          Use the API to search for videos matching specific search terms,
-          topics, locations, publication dates, and much more. The APIs
-          search.list method also supports searches for playlists and channels.
-          With the YouTube Data API, you can add a variety of YouTube features
-          to your application. Use the API to upload videos, manage playlists
-          and subscriptions, update channel settings, and more.
-        </p>
+        <h1>Enter search keyword(s) and press Enter...</h1>
       </div>
     );
   }
 
   const videoSrc = `https://www.youtube.com/embed/${video.id.videoId}`;
-  console.log(typeof video);
   return (
     <div>
       <div>
