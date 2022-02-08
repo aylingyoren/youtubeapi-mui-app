@@ -1,8 +1,8 @@
-import React from "react";
+import { Video } from "../../types/types";
 import VideoItem from "../VideoItem";
 
 const VideoList = ({ videos, handleVideoSelect }: any) => {
-  const renderedVideos = videos.map((video: any) => {
+  const renderedVideos = videos.map((video: Video) => {
     return (
       <VideoItem
         key={video.id.videoId}
@@ -12,6 +12,8 @@ const VideoList = ({ videos, handleVideoSelect }: any) => {
     );
     console.log(video.id);
   });
+
+  console.log(renderedVideos.id);
 
   return <div>{renderedVideos}</div>;
 };

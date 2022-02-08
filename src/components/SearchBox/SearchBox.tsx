@@ -1,9 +1,8 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent } from "react";
 import { TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
-function SearchBox({ handleFormSubmit }: any) {
-  const [term, setTerm] = useState<string>("");
+function SearchBox({ handleFormSubmit, term, setTerm }: any) {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTerm(e.target.value);
   };

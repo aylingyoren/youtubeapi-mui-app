@@ -4,8 +4,9 @@ import { useState } from "react";
 import youtube from "../../apis/youtube";
 import VideoList from "../VideoList";
 import VideoDetail from "../VideoDetail";
-import env from "react-dotenv";
 import "./App.css";
+import { Video } from "../../types/types";
+import { Item } from "../../types/types";
 
 function App() {
   // const fetchCharacters = async (url: string) => {
@@ -26,25 +27,30 @@ function App() {
   // if (isLoading) return <div>Loading...</div>;
   // if (isError) return <div>Error occured: {error!.message}</div>;
 
-  const [videos, setVideos] = useState<any>([]);
-  const [selectedVideo, setSelectedVideo] = useState<any>(null);
+  const [videos, setVideos] = useState<Item[]>([]);
+  const [term, setTerm] = useState<string>("");
+  const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [error, setError] = useState<any>(null);
 
-  const handleSubmit = async (termFromSearchBar: any) => {
+  const handleSubmit = async (term: string) => {
     try {
       const response = await youtube.get("/search", {
         params: {
-          query: termFromSearchBar,
+          type: "video",
+          q: term,
         },
       });
       setVideos(response.data.items);
+      console.log(response.data.items);
+      console.log(response.data.items);
+      console.log(JSON.stringify(response));
       console.log("this is resp: ", response);
     } catch (err) {
       setError(err);
     }
   };
 
-  const handleVideoSelect = (video: any) => {
+  const handleVideoSelect = (video: Video) => {
     setSelectedVideo(video);
   };
 
@@ -53,7 +59,11 @@ function App() {
   return (
     <div className="App">
       <h1>YouTube API App</h1>
-      <SearchBox handleFormSubmit={handleSubmit} />
+      <SearchBox
+        handleFormSubmit={handleSubmit}
+        term={term}
+        setTerm={setTerm}
+      />
       <VideoDetail video={selectedVideo} />
       <VideoList handleVideoSelect={handleVideoSelect} videos={videos} />
     </div>
