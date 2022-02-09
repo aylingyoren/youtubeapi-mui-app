@@ -29,6 +29,7 @@ function VideoItem({
           </Typography>
           <p>{video.snippet.channelTitle}</p>
           <p>{video.snippet.publishedAt}</p>
+          <p>{video.statistics?.viewCount}</p>
         </CardContent>
       </CardActionArea>
     </Card>

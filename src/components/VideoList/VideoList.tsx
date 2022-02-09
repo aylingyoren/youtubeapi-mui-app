@@ -5,12 +5,12 @@ const VideoList = ({
   videos,
   handleVideoSelect,
 }: {
-  videos: Video[];
+  videos: Video[] | undefined;
   handleVideoSelect: Function;
 }) => {
   return (
     <>
-      {videos.map((video: Video) => {
+      {videos?.map((video: Video) => {
         return (
           <VideoItem
             key={video.id.videoId}

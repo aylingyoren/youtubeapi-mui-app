@@ -3,6 +3,7 @@ export interface Video {
   etag: string;
   id: ID;
   snippet: Snippet;
+  statistics: Statistics;
 }
 export interface Empty {
   data: Data;
@@ -61,6 +62,7 @@ export interface Item {
   etag: string;
   id: ID;
   snippet: Snippet;
+  statistics: Statistics;
 }
 
 export interface ID {
@@ -85,6 +87,14 @@ export interface Snippet {
   channelTitle: string;
   liveBroadcastContent: LiveBroadcastContent;
   publishTime: Date;
+}
+
+export interface Statistics {
+  viewCount: string;
+  likeCount: string;
+  dislikeCount: string;
+  favoriteCount: string;
+  commentCount: string;
 }
 
 export enum LiveBroadcastContent {
