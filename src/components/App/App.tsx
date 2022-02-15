@@ -12,6 +12,7 @@ function App() {
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
 
   const handleSubmit = async () => {
+    if (!term) return;
     try {
       const response = await youtube.get("/search", {
         params: {
@@ -20,20 +21,33 @@ function App() {
         },
       });
       console.log("this is resp: ", response);
-      refetch();
-      return response.data.items;
-    } catch (err: unknown) {
-      throw new Error("Failed to process your request. " + err);
+      // refetch();
+      const items = response.data.items;
+      return items as Video[];
+    } catch (err: any) {
+      if (err.response) {
+        console.log(err.response.data);
+        console.log(err.response.status);
+        console.log(err.response.headers);
+      } else if (err.request) {
+        console.log(err.request);
+      } else {
+        console.log("Error", err.message);
+      }
+      console.log(err.config);
     }
   };
 
-  const { data, isLoading, isError, error, refetch } = useQuery<Video[], Error>(
-    "fetchData",
-    async () => handleSubmit(),
-    {
-      enabled: false,
-    }
-  );
+  const { data, status, isLoading, isIdle, isError, error, refetch } = useQuery<
+    Video[] | undefined,
+    Error
+  >("fetchData", handleSubmit, {
+    enabled: false,
+    retry: false,
+    // enabled: !!term,
+  });
+
+  console.log(data);
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error occured: {error!.message}</div>;
@@ -51,7 +65,9 @@ function App() {
         setTerm={setTerm}
       />
       <VideoDetail video={selectedVideo} />
-      <VideoList handleVideoSelect={handleVideoSelect} videos={data} />
+      {status === "success" && (
+        <VideoList handleVideoSelect={handleVideoSelect} videos={data} />
+      )}
     </div>
   );
 }

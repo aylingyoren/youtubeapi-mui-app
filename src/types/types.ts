@@ -1,11 +1,4 @@
-export interface Video {
-  kind: string;
-  etag: string;
-  id: ID;
-  snippet: Snippet;
-  statistics: Statistics;
-}
-export interface Empty {
+export interface YouTubeApi {
   data: Data;
   status: number;
   statusText: string;
@@ -39,7 +32,7 @@ export interface Params {
   maxResults: number;
   key: string;
   type: string;
-  query: string;
+  q: string;
 }
 
 export interface Transitional {
@@ -54,10 +47,10 @@ export interface Data {
   nextPageToken: string;
   regionCode: string;
   pageInfo: PageInfo;
-  items: Item[];
+  items: Video[];
 }
 
-export interface Item {
+export interface Video {
   kind: ItemKind;
   etag: string;
   id: ID;
@@ -99,6 +92,7 @@ export interface Statistics {
 
 export enum LiveBroadcastContent {
   None = "none",
+  Upcoming = "upcoming",
 }
 
 export interface Thumbnails {
@@ -129,31 +123,3 @@ export interface Headers {
 }
 
 export interface Request {}
-
-export interface ID {
-  kind: IDKind;
-  videoId: string;
-}
-
-export interface Snippet {
-  publishedAt: Date;
-  channelId: string;
-  title: string;
-  description: string;
-  thumbnails: Thumbnails;
-  channelTitle: string;
-  liveBroadcastContent: LiveBroadcastContent;
-  publishTime: Date;
-}
-
-export interface Thumbnails {
-  default: Default;
-  medium: Default;
-  high: Default;
-}
-
-export interface Default {
-  url: string;
-  width: number;
-  height: number;
-}
