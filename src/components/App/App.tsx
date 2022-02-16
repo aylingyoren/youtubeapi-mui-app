@@ -4,12 +4,16 @@ import SearchBox from "../SearchBox";
 import youtube from "../../apis/youtube";
 import VideoList from "../VideoList";
 import VideoDetail from "../VideoDetail";
+import Pagination from "../Pagination";
 import { Video } from "../../types/types";
 import "./App.css";
 
 function App() {
   const [term, setTerm] = useState<string>("");
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
+  const [totalVideos, setTotalVideos] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [videosPerPage] = useState<number>(5);
 
   const handleSubmit = async () => {
     if (!term) return;
@@ -21,9 +25,9 @@ function App() {
         },
       });
       console.log("this is resp: ", response);
-      // refetch();
-      const items = response.data.items;
-      return items as Video[];
+      setTotalVideos(response.data.pageInfo.resultsPerPage);
+      refetch();
+      return response.data.items;
     } catch (err: any) {
       if (err.response) {
         console.log(err.response.data);
@@ -38,22 +42,30 @@ function App() {
     }
   };
 
-  const { data, status, isLoading, isIdle, isError, error, refetch } = useQuery<
+  const { data, isLoading, isError, error, refetch } = useQuery<
     Video[] | undefined,
     Error
   >("fetchData", handleSubmit, {
     enabled: false,
     retry: false,
-    // enabled: !!term,
   });
-
-  console.log(data);
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error occured: {error!.message}</div>;
 
   const handleVideoSelect = (video: Video) => {
     setSelectedVideo(video);
+  };
+
+  const indexOfLastVideo = currentPage * videosPerPage;
+  const indexOfFirstVideo = indexOfLastVideo - videosPerPage;
+  const currentVideos: Video[] | undefined = data?.slice(
+    indexOfFirstVideo,
+    indexOfLastVideo
+  );
+
+  const paginate = async (pageNumber: number) => {
+    await setCurrentPage(pageNumber);
   };
 
   return (
@@ -65,9 +77,12 @@ function App() {
         setTerm={setTerm}
       />
       <VideoDetail video={selectedVideo} />
-      {status === "success" && (
-        <VideoList handleVideoSelect={handleVideoSelect} videos={data} />
-      )}
+      <VideoList handleVideoSelect={handleVideoSelect} videos={currentVideos} />
+      <Pagination
+        videosPerPage={videosPerPage}
+        totalVideos={totalVideos}
+        paginate={paginate}
+      />
     </div>
   );
 }

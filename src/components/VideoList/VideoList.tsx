@@ -1,6 +1,7 @@
 import { Grid } from "@mui/material";
 import { Video } from "../../types/types";
 import VideoItem from "../VideoItem";
+import "./VideoList.css";
 
 const VideoList = ({
   videos,
@@ -13,7 +14,7 @@ const VideoList = ({
     <>
       <Grid
         container
-        columns={{ xs: 1, md: 3, lg: 12 }}
+        columns={{ xs: 1, md: 3, lg: 4 }}
         direction="row"
         justifyContent="flex-start"
         alignItems="flex-start"
