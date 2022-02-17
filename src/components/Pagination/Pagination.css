@@ -1,20 +1,22 @@
-.pagination {
+.pagination-custom {
+  margin-top: 10px;
   margin-left: 30%;
 }
 
-.page-item {
+.page-item-custom {
   width: 40px;
   height: 40px;
   display: inline-flex;
-  margin-right: 20px;
+  margin-top: 5px;
+  margin-right: 10px;
   outline: 1px solid black;
   cursor: pointer;
 }
 
-.page-item a {
+.page-item-custom a {
   margin: 0 auto;
 }
 
-.page-link-active {
+.page-link-active-custom {
   outline: 1px solid red;
 }

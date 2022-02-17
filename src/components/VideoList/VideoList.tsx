@@ -20,7 +20,7 @@ const VideoList = ({
         alignItems="flex-start"
         spacing={1.5}
       >
-        {videos?.map((video: Video) => {
+        {videos?.flat().map((video: Video) => {
           return (
             <Grid item>
               <VideoItem

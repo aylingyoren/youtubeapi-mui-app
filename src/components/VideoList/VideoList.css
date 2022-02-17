@@ -1,0 +1,14 @@
+.container {
+  overflow-x: scroll;
+  width: 100%;
+}
+
+.card {
+  overflow-x: scroll;
+  display: inline-flex;
+  float: left;
+  flex-shrink: 0;
+  width: "auto";
+  height: 500px;
+  margin-left: 10px;
+}

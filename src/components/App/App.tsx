@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useQuery } from "react-query";
+import { useEffect, useState } from "react";
 import SearchBox from "../SearchBox";
 import youtube from "../../apis/youtube";
 import VideoList from "../VideoList";
@@ -10,23 +9,31 @@ import "./App.css";
 
 function App() {
   const [term, setTerm] = useState<string>("");
+  const [data, setData] = useState<Video[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<any>(null);
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [totalVideos, setTotalVideos] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [videosPerPage] = useState<number>(5);
+  const [videosPerPage] = useState<number>(10);
+  const [nextPageToken, setNextPageToken] = useState<string>("");
 
   const handleSubmit = async () => {
     if (!term) return;
     try {
+      setIsLoading(true);
       const response = await youtube.get("/search", {
         params: {
           type: "video",
           q: term,
+          pageToken: nextPageToken ? nextPageToken : null,
         },
       });
       console.log("this is resp: ", response);
-      setTotalVideos(response.data.pageInfo.resultsPerPage);
-      refetch();
+      setData([...data, response.data.items].flat());
+      setTotalVideos(data?.length);
+      setNextPageToken(response.data.nextPageToken);
+      setIsLoading(false);
       return response.data.items;
     } catch (err: any) {
       if (err.response) {
@@ -38,20 +45,17 @@ function App() {
       } else {
         console.log("Error", err.message);
       }
+      setError(err);
       console.log(err.config);
     }
   };
 
-  const { data, isLoading, isError, error, refetch } = useQuery<
-    Video[] | undefined,
-    Error
-  >("fetchData", handleSubmit, {
-    enabled: false,
-    retry: false,
-  });
+  useEffect(() => {
+    handleSubmit();
+  }, []);
 
   if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error occured: {error!.message}</div>;
+  if (error) return <div>Error occured: {error!.message}</div>;
 
   const handleVideoSelect = (video: Video) => {
     setSelectedVideo(video);
