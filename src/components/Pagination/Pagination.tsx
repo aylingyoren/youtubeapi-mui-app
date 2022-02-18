@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
 import "./Pagination.css";
 
@@ -11,33 +10,10 @@ function Pagination({
   totalVideos: number;
   paginate: Function;
 }) {
-  const pageNumbers = [];
-
-  for (let i = 1; i <= Math.ceil(totalVideos / videosPerPage); i++) {
-    pageNumbers.push(i);
-  }
-
-  const handlePageClick = (data: any) => console.log(data.selected);
+  const handlePageClick = (data: { selected: number }) =>
+    paginate(data.selected + 1);
   return (
     <>
-      <nav>
-        <ul className="pagination-custom">
-          {pageNumbers.map((number) => (
-            <li key={number} className="page-item-custom">
-              <a
-                onClick={() => {
-                  paginate(number);
-                }}
-                href="!#"
-                className="page-link-custom"
-                style={{ textDecoration: "none", fontSize: "24px" }}
-              >
-                {number}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
       <ReactPaginate
         pageCount={Math.ceil(totalVideos / videosPerPage)}
         previousLabel={`<<`}
