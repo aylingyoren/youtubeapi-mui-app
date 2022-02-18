@@ -6,10 +6,15 @@ import "./VideoList.css";
 const VideoList = ({
   videos,
   handleVideoSelect,
+  handleFormSubmit,
 }: {
   videos: Video[] | undefined;
   handleVideoSelect: Function;
+  handleFormSubmit: Function;
 }) => {
+  const handleSubmit = () => {
+    handleFormSubmit();
+  };
   return (
     <>
       <Grid
@@ -20,17 +25,30 @@ const VideoList = ({
         alignItems="flex-start"
         spacing={1.5}
       >
-        {videos?.flat().map((video: Video) => {
-          return (
-            <Grid item>
-              <VideoItem
-                key={video.id.videoId}
-                video={video}
-                handleVideoSelect={handleVideoSelect}
-              />
-            </Grid>
-          );
-        })}
+        <div
+          style={{
+            display: "inline-flex",
+            height: "500px",
+            marginLeft: "20px",
+          }}
+        >
+          {videos?.flat().map((video: Video) => {
+            return (
+              <Grid item>
+                <VideoItem
+                  key={video.id.videoId}
+                  video={video}
+                  handleVideoSelect={handleVideoSelect}
+                />
+              </Grid>
+            );
+          })}
+        </div>
+        {videos && (
+          <button type="button" className="load-btn" onClick={handleSubmit}>
+            Load more
+          </button>
+        )}
       </Grid>
     </>
   );

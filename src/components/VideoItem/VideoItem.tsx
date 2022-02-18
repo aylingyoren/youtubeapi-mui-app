@@ -13,26 +13,28 @@ function VideoItem({
   handleVideoSelect: Function;
 }) {
   return (
-    <Card onClick={() => handleVideoSelect(video)} sx={{ maxWidth: 345 }}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          src={video.snippet.thumbnails.medium.url}
-          alt={video.snippet.description}
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {video.snippet.title}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {video.snippet.description}
-          </Typography>
-          <p>{video.snippet.channelTitle}</p>
-          <p>{video.snippet.publishedAt}</p>
-          <p>{video.statistics?.viewCount}</p>
-        </CardContent>
-      </CardActionArea>
-    </Card>
+    <div style={{ width: "360px" }}>
+      <Card onClick={() => handleVideoSelect(video)} sx={{ maxWidth: 345 }}>
+        <CardActionArea>
+          <CardMedia
+            component="img"
+            src={video.snippet.thumbnails.medium.url}
+            alt={video.snippet.description}
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              {video.snippet.title}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {video.snippet.description}
+            </Typography>
+            <p>{video.snippet.channelTitle}</p>
+            <p>{video.snippet.publishedAt}</p>
+            <p>{video.statistics?.viewCount}</p>
+          </CardContent>
+        </CardActionArea>
+      </Card>
+    </div>
   );
 }
 

@@ -15,7 +15,7 @@ function App() {
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [totalVideos, setTotalVideos] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [videosPerPage] = useState<number>(10);
+  const [videosPerPage] = useState<number>(4);
   const [nextPageToken, setNextPageToken] = useState<string>("");
 
   const handleSubmit = async () => {
@@ -81,7 +81,11 @@ function App() {
         setTerm={setTerm}
       />
       <VideoDetail video={selectedVideo} />
-      <VideoList handleVideoSelect={handleVideoSelect} videos={currentVideos} />
+      <VideoList
+        handleVideoSelect={handleVideoSelect}
+        videos={currentVideos}
+        handleFormSubmit={handleSubmit}
+      />
       <Pagination
         videosPerPage={videosPerPage}
         totalVideos={totalVideos}
