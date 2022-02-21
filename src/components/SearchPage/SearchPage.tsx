@@ -9,6 +9,7 @@ import "./SearchPage.css";
 
 function App() {
   const [term, setTerm] = useState<string>("");
+  const [currentTerm, setCurrentTerm] = useState<string>("");
   const [data, setData] = useState<Video[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<any>(null);
@@ -32,13 +33,12 @@ function App() {
         },
       });
       console.log("this is resp: ", response);
-      // if (searchTerm !== term) {
-      //   setData([]);
-      //   setData([response.data.items].flat());
-      // } else if (searchTerm === term) {
-      //   setData([...data, response.data.items].flat());
-      // }
-      setData([...data, response.data.items].flat());
+      if (searchTerm !== currentTerm) {
+        setData([response.data.items].flat());
+      } else if (searchTerm === currentTerm) {
+        setData([...data, response.data.items].flat());
+      }
+      setCurrentTerm(searchTerm);
       setTotalVideos(data?.length);
       setNextPageToken(response.data.nextPageToken);
       setIsLoading(false);
@@ -90,8 +90,7 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <h1>YouTube API App</h1>
+    <div className="search-page">
       <SearchBox
         handleFormSubmit={handleSubmit}
         term={term}
