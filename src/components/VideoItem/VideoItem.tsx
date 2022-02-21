@@ -13,7 +13,7 @@ function VideoItem({
   handleVideoSelect: Function;
 }) {
   return (
-    <div style={{ width: "360px" }}>
+    <div style={{ width: "345px", marginRight: "13px" }}>
       <Card onClick={() => handleVideoSelect(video)} sx={{ maxWidth: 345 }}>
         <CardActionArea>
           <CardMedia

@@ -2,20 +2,19 @@ import ReactPaginate from "react-paginate";
 import "./Pagination.css";
 
 function Pagination({
-  videosPerPage,
-  totalVideos,
+  pageCount,
   paginate,
 }: {
-  videosPerPage: number;
-  totalVideos: number;
+  pageCount: number;
   paginate: Function;
 }) {
   const handlePageClick = (data: { selected: number }) =>
     paginate(data.selected + 1);
+
   return (
     <>
       <ReactPaginate
-        pageCount={Math.ceil(totalVideos / videosPerPage)}
+        pageCount={Math.ceil(pageCount)}
         previousLabel={`<<`}
         nextLabel={`>>`}
         breakLabel={`...`}

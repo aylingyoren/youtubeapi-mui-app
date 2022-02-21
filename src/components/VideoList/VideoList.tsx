@@ -28,7 +28,7 @@ const VideoList = ({
         <div
           style={{
             display: "inline-flex",
-            height: "500px",
+            height: "450px",
             marginLeft: "20px",
           }}
         >
@@ -44,12 +44,12 @@ const VideoList = ({
             );
           })}
         </div>
-        {videos && (
-          <button type="button" className="load-btn" onClick={handleSubmit}>
-            Load more
-          </button>
-        )}
       </Grid>
+      {videos !== undefined && (
+        <button type="button" className="load-btn" onClick={handleSubmit}>
+          Load more
+        </button>
+      )}
     </>
   );
 };
