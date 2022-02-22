@@ -2,7 +2,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { CardActionArea } from "@mui/material";
+import { CardActionArea, Tooltip } from "@mui/material";
 import { Video } from "../../types/types";
 
 function VideoItem({
@@ -25,9 +25,11 @@ function VideoItem({
             <Typography gutterBottom variant="h5" component="div">
               {video.snippet.title}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {video.snippet.description}
-            </Typography>
+            <Tooltip title={video.snippet.description}>
+              <Typography variant="body2" color="text.secondary">
+                {video.snippet.description.slice(0, 30) + "..."}
+              </Typography>
+            </Tooltip>
             <p>{video.snippet.channelTitle}</p>
             <p>{video.snippet.publishedAt}</p>
             <p>{video.statistics?.viewCount}</p>
