@@ -4,17 +4,33 @@ import VideoItem from "../VideoItem";
 import "./VideoList.css";
 
 const VideoList = ({
+  term,
   videos,
   handleVideoSelect,
   handleFormSubmit,
 }: {
+  term: string;
   videos: Video[] | undefined;
   handleVideoSelect: Function;
   handleFormSubmit: Function;
 }) => {
   const handleSubmit = () => {
-    handleFormSubmit();
+    handleFormSubmit(term);
   };
+
+  // {videos && (
+  //   <InfiniteScroll
+  //     dataLength={videos.length} //This is important field to render the next data
+  //     next={handleSubmit}
+  //     hasMore={true}
+  //     loader={<h4>Loading...</h4>}
+  //     endMessage={
+  //       <p style={{ textAlign: "center" }}>
+  //         <b>Yay! You have seen it all</b>
+  //       </p>
+  //     }
+  //   >
+
   return (
     <>
       <Grid
@@ -45,7 +61,7 @@ const VideoList = ({
           })}
         </div>
       </Grid>
-      {videos !== undefined && (
+      {videos?.length !== 0 && (
         <button type="button" className="load-btn" onClick={handleSubmit}>
           Load more
         </button>

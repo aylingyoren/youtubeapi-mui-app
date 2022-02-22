@@ -15,13 +15,14 @@ function VideoItem({
   return (
     <div style={{ width: "345px", marginRight: "13px" }}>
       <Card onClick={() => handleVideoSelect(video)} sx={{ maxWidth: 345 }}>
-        <CardActionArea>
+        <CardActionArea sx={{ height: 480 }}>
           <CardMedia
+            sx={{ position: "absolute", top: 0 }}
             component="img"
             src={video.snippet.thumbnails.medium.url}
             alt={video.snippet.description}
           />
-          <CardContent>
+          <CardContent sx={{ marginTop: 25 }}>
             <Typography gutterBottom variant="h5" component="div">
               {video.snippet.title}
             </Typography>

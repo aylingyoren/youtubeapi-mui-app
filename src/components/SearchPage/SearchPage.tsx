@@ -98,6 +98,7 @@ function App() {
       />
       <VideoDetail video={selectedVideo} />
       <VideoList
+        term={term}
         handleVideoSelect={handleVideoSelect}
         videos={currentVideos}
         handleFormSubmit={handleSubmit}
