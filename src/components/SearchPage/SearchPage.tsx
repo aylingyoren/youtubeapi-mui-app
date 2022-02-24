@@ -17,7 +17,7 @@ function App() {
   const [totalVideos, setTotalVideos] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageCount, setPageCount] = useState(1);
-  const [videosPerPage] = useState<number>(4);
+  const [videosPerPage] = useState<number>(Infinity);
   const [nextPageToken, setNextPageToken] = useState<string>("");
   // const [prevPageToken, setPrevPageToken] = useState<string>("");
 
@@ -29,7 +29,7 @@ function App() {
         params: {
           type: "video",
           q: searchTerm,
-          pageToken: nextPageToken ? nextPageToken : null,
+          // pageToken: nextPageToken ? nextPageToken : null,
         },
       });
       console.log("this is resp: ", response);
