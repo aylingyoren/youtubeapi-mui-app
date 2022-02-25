@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import SearchBox from "../SearchBox";
 import youtube from "../../apis/youtube";
-import VideoList from "../VideoList";
-import VideoDetail from "../VideoDetail";
 import Pagination from "../Pagination";
 import { Video } from "../../types/types";
 import "./SearchPage.css";
+
+const VideoList = React.lazy(() => import("../VideoList"));
+const VideoDetail = React.lazy(() => import("../VideoDetail"));
 
 function App() {
   const [term, setTerm] = useState<string>("");
@@ -96,13 +97,17 @@ function App() {
         term={term}
         setTerm={setTerm}
       />
-      <VideoDetail video={selectedVideo} />
-      <VideoList
-        term={term}
-        handleVideoSelect={handleVideoSelect}
-        videos={currentVideos}
-        handleFormSubmit={handleSubmit}
-      />
+      <Suspense fallback={<div>Loading...</div>}>
+        <VideoDetail video={selectedVideo} />
+      </Suspense>
+      <Suspense fallback={<div>Loading...</div>}>
+        <VideoList
+          term={term}
+          handleVideoSelect={handleVideoSelect}
+          videos={currentVideos}
+          handleFormSubmit={handleSubmit}
+        />
+      </Suspense>
       <Pagination pageCount={pageCount} paginate={paginate} />
     </div>
   );
