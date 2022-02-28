@@ -100,14 +100,16 @@ function App() {
       <Suspense fallback={<div>Loading...</div>}>
         <VideoDetail video={selectedVideo} />
       </Suspense>
-      <Suspense fallback={<div>Loading...</div>}>
-        <VideoList
-          term={term}
-          handleVideoSelect={handleVideoSelect}
-          videos={currentVideos}
-          handleFormSubmit={handleSubmit}
-        />
-      </Suspense>
+      {data.length !== 0 && (
+        <Suspense fallback={<div>Loading...</div>}>
+          <VideoList
+            term={term}
+            handleVideoSelect={handleVideoSelect}
+            videos={currentVideos}
+            handleFormSubmit={handleSubmit}
+          />
+        </Suspense>
+      )}
       <Pagination pageCount={pageCount} paginate={paginate} />
     </div>
   );
