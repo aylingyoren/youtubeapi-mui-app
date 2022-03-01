@@ -5,18 +5,18 @@ import VideoItem from "../VideoItem";
 import "./VideoList.css";
 
 const VideoList = ({
-  term,
+  hasMore,
   videos,
   handleVideoSelect,
   handleFormSubmit,
 }: {
-  term: string;
+  hasMore: boolean;
   videos: Video[] | undefined;
   handleVideoSelect: Function;
   handleFormSubmit: Function;
 }) => {
   const handleSubmit = () => {
-    handleFormSubmit(term);
+    handleFormSubmit();
   };
 
   return (
@@ -25,7 +25,7 @@ const VideoList = ({
         <InfiniteScroll
           dataLength={videos.length}
           next={handleSubmit}
-          hasMore={true}
+          hasMore={hasMore}
           loader={<h4>Loading...</h4>}
           endMessage={
             <p style={{ textAlign: "center" }}>

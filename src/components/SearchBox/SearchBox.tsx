@@ -17,7 +17,7 @@ function SearchBox({
   };
   const handleSubmit = (e: FormEvent<HTMLFormElement> | any) => {
     e.preventDefault();
-    handleFormSubmit(term);
+    handleFormSubmit();
   };
   return (
     <div>
