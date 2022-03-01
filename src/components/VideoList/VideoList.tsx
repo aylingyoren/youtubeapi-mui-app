@@ -26,6 +26,7 @@ const VideoList = ({
           dataLength={videos.length}
           next={handleSubmit}
           hasMore={hasMore}
+          scrollThreshold={1}
           loader={<h4>Loading...</h4>}
           endMessage={
             <p style={{ textAlign: "center" }}>

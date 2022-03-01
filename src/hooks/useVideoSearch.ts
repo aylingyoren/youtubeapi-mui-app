@@ -50,10 +50,10 @@ export default function useVideoSearch(searchTerm: string) {
     }
   };
 
-  // setCurrentPage(data / videosPerPage)  initial?
   useEffect(() => {
     handleSubmit();
   }, []);
+  
     return {
         data,
         isLoading,
