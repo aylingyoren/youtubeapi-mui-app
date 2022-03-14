@@ -1,5 +1,6 @@
 import React, { Suspense, useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
+import { useQuery } from "react-query";
 import { useSwipeable } from "react-swipeable";
 import useVideoSearch from "../../hooks/useVideoSearch";
 import { Video } from "../../types/types";
@@ -18,7 +19,13 @@ function SearchPage() {
   const [offset, setOffset] = useState(4);
   const [videosPerPage] = useState<number>(4);
 
-  const { data, isLoading, error, handleSubmit } = useVideoSearch(term);
+  const { data, handleSubmit } = useVideoSearch(term);
+
+  const { isLoading, error } = useQuery<Video[], Error>(
+    "videos",
+    () => handleSubmit(),
+    { enabled: false }
+  );
 
   const handlePageClick = (e: { selected: number }) => {
     const selectedPage = e.selected;
@@ -48,8 +55,6 @@ function SearchPage() {
     setVideos(data.slice(offset - videosPerPage, offset));
   }, [offset, data]);
 
-  console.log(data);
-
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error occured: {error!.message}</div>;
 
@@ -69,11 +74,7 @@ function SearchPage() {
       </Suspense>
       {data.length !== 0 && (
         <Suspense fallback={<div>Loading...</div>}>
-          <VideoList
-            handleVideoSelect={handleVideoSelect}
-            videos={videos}
-            handleFormSubmit={handleSubmit}
-          />
+          <VideoList handleVideoSelect={handleVideoSelect} videos={videos} />
         </Suspense>
       )}
       {pageCount > 0 && (
@@ -97,6 +98,11 @@ function SearchPage() {
           breakLinkClassName={`page-link`}
           activeClassName={`active`}
         />
+      )}
+      {videos?.length !== 0 && (
+        <button type="button" className="load-btn" onClick={handleSubmit}>
+          Load more
+        </button>
       )}
     </div>
   );
