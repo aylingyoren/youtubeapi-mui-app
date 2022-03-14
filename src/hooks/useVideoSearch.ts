@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import youtube from '../apis/youtube';
-import { Video } from '../types/types';
+import React, { useState } from "react";
+import youtube from "../apis/youtube";
+import { Video } from "../types/types";
 
 export default function useVideoSearch(searchTerm: string) {
   const [currentTerm, setCurrentTerm] = useState<string>("");
   const [data, setData] = useState<Video[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<any>(null);
-  const [totalVideos, setTotalVideos] = useState<number>(0);
   const [nextPageToken, setNextPageToken] = useState<string>("");
-  const [hasMore, setHasMore] = useState<boolean>(false);
-  // const [prevPageToken, setPrevPageToken] = useState<string>("");
+  const [prevPageToken, setPrevPageToken] = useState<string>("");
 
   const handleSubmit = async () => {
     if (!searchTerm) return;
@@ -30,9 +28,10 @@ export default function useVideoSearch(searchTerm: string) {
         setData([...data, ...response.data.items]);
       }
       setCurrentTerm(searchTerm);
-      setHasMore(response.data.items.length > 0);
-      setTotalVideos(data?.length);
-      setNextPageToken(response.data.nextPageToken);
+      if (response.data.nextPageToken)
+        setNextPageToken(response.data.nextPageToken);
+      if (response.data.prevPageToken)
+        setPrevPageToken(response.data.prevPageToken);
       setIsLoading(false);
       return response.data.items;
     } catch (err: any) {
@@ -50,16 +49,10 @@ export default function useVideoSearch(searchTerm: string) {
     }
   };
 
-  useEffect(() => {
-    handleSubmit();
-  }, []);
-  
-    return {
-        data,
-        isLoading,
-        error,
-        hasMore,
-        totalVideos,
-        handleSubmit
-    }
+  return {
+    data,
+    isLoading,
+    error,
+    handleSubmit,
+  };
 }
