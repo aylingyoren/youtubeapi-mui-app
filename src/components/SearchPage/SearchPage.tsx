@@ -1,9 +1,9 @@
 import React, { Suspense, useEffect, useState } from "react";
-import ReactPaginate from "react-paginate";
 import { useQuery } from "react-query";
 import { useSwipeable } from "react-swipeable";
 import useVideoSearch from "../../hooks/useVideoSearch";
 import { Video } from "../../types/types";
+import Pagination from "../Pagination";
 import SearchBox from "../SearchBox";
 import "./SearchPage.css";
 
@@ -15,8 +15,8 @@ function SearchPage() {
   const [videos, setVideos] = useState<Video[]>([]);
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(0);
-  const [pageCount, setPageCount] = useState(1);
-  const [offset, setOffset] = useState(4);
+  const [pageCount, setPageCount] = useState<number>(1);
+  const [offset, setOffset] = useState<number>(4);
   const [videosPerPage] = useState<number>(4);
 
   const { data, handleSubmit } = useVideoSearch(term);
@@ -77,28 +77,11 @@ function SearchPage() {
           <VideoList handleVideoSelect={handleVideoSelect} videos={videos} />
         </Suspense>
       )}
-      {pageCount > 0 && (
-        <ReactPaginate
-          pageCount={pageCount}
-          previousLabel={`<<`}
-          nextLabel={`>>`}
-          breakLabel={`...`}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={3}
-          onPageChange={handlePageClick}
-          forcePage={currentPage}
-          containerClassName={`pagination justify-content-center`}
-          pageClassName={`page-item`}
-          pageLinkClassName={`page-link`}
-          previousClassName={`page-item`}
-          nextClassName={`page-item`}
-          previousLinkClassName={`page-link`}
-          nextLinkClassName={`page-link`}
-          breakClassName={`page-item`}
-          breakLinkClassName={`page-link`}
-          activeClassName={`active`}
-        />
-      )}
+      <Pagination
+        pageCount={pageCount}
+        handlePageClick={handlePageClick}
+        currentPage={currentPage}
+      />
       {videos?.length !== 0 && (
         <button type="button" className="load-btn" onClick={handleSubmit}>
           Load more
