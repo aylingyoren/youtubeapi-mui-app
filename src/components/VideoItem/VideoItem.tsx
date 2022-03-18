@@ -15,7 +15,7 @@ function VideoItem({
   return (
     <div style={{ width: "345px" }}>
       <Card onClick={() => handleVideoSelect(video)} sx={{ maxWidth: 345 }}>
-        <CardActionArea sx={{ height: 480 }}>
+        <CardActionArea sx={{ height: 400 }}>
           <CardMedia
             sx={{ position: "absolute", top: 0 }}
             component="img"
@@ -23,9 +23,11 @@ function VideoItem({
             alt={video.snippet.description}
           />
           <CardContent sx={{ marginTop: 25 }}>
-            <Typography gutterBottom variant="h5" component="div">
-              {video.snippet.title}
-            </Typography>
+            <Tooltip title={video.snippet.title}>
+              <Typography gutterBottom variant="h5" component="div">
+                {video.snippet.title.slice(0, 25) + "..."}
+              </Typography>
+            </Tooltip>
             <Tooltip title={video.snippet.description}>
               <Typography variant="body2" color="text.secondary">
                 {video.snippet.description.slice(0, 30) + "..."}
