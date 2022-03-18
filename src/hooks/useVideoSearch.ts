@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import youtube from "../apis/youtube";
 import { Video } from "../types/types";
 
@@ -17,10 +17,9 @@ export default function useVideoSearch(searchTerm: string) {
         pageToken: nextPageToken ? nextPageToken : null,
       },
     });
-    console.log("this is resp: ", response);
     if (searchTerm !== currentTerm) {
       setData([...response.data.items]);
-    } else if (searchTerm === currentTerm) {
+    } else {
       setData([...data, ...response.data.items]);
     }
     setCurrentTerm(searchTerm);
@@ -34,5 +33,6 @@ export default function useVideoSearch(searchTerm: string) {
   return {
     data,
     handleSubmit,
+    prevPageToken,
   };
 }

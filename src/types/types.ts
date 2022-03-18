@@ -121,5 +121,3 @@ export interface Headers {
   server: string;
   vary: string;
 }
-
-export interface Request {}
