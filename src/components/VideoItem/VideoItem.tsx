@@ -5,6 +5,13 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea, Tooltip } from "@mui/material";
 import { Video } from "../../types/types";
 
+const textOverflow: Object = {
+  whiteSpace: "nowrap",
+  width: "300px",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+};
+
 function VideoItem({
   video,
   handleVideoSelect,
@@ -24,13 +31,22 @@ function VideoItem({
           />
           <CardContent sx={{ marginTop: 25 }}>
             <Tooltip title={video.snippet.title}>
-              <Typography gutterBottom variant="h5" component="div">
-                {video.snippet.title.slice(0, 25) + "..."}
+              <Typography
+                gutterBottom
+                variant="h5"
+                component="div"
+                style={textOverflow}
+              >
+                {video.snippet.title}
               </Typography>
             </Tooltip>
             <Tooltip title={video.snippet.description}>
-              <Typography variant="body2" color="text.secondary">
-                {video.snippet.description.slice(0, 30) + "..."}
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                style={textOverflow}
+              >
+                {video.snippet.description}
               </Typography>
             </Tooltip>
             <p>{video.snippet.channelTitle}</p>
