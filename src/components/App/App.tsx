@@ -5,6 +5,7 @@ import useVideoSearch from "../../hooks/useVideoSearch";
 import { Video } from "../../types/types";
 import Pagination from "../Pagination";
 import SearchBox from "../SearchBox";
+import Spinner from "../Spinner";
 import "./App.css";
 
 const VideoList = React.lazy(() => import("../VideoList"));
@@ -58,7 +59,7 @@ function App() {
     setVideos(data.slice(offset - VIDEOS_PER_PAGE, offset));
   }, [offset, data]);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Spinner />;
   if (error) return <div>Error occured: {error!.message}</div>;
 
   const handleVideoSelect = (video: Video) => {
@@ -74,11 +75,11 @@ function App() {
           term={term}
           setTerm={setTerm}
         />
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Spinner />}>
           <VideoDetail video={selectedVideo} />
         </Suspense>
         {data.length !== 0 && (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Spinner />}>
             <VideoList handleVideoSelect={handleVideoSelect} videos={videos} />
           </Suspense>
         )}
