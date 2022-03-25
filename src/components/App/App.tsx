@@ -7,7 +7,6 @@ import { Video } from "../../types/types";
 import Pagination from "../Pagination";
 import SearchBox from "../SearchBox";
 import Spinner from "../Spinner";
-import { LoadButton } from "../styled_components/LoadButton";
 
 const VideoList = React.lazy(() => import("../VideoList"));
 const VideoDetail = React.lazy(() => import("../VideoDetail"));
@@ -32,6 +31,7 @@ function App() {
 
   const handlePageClick = (e: { selected: number }) => {
     const selectedPage = e.selected;
+    if (selectedPage === pageCount - 1) handleSubmit();
     setCurrentPage(selectedPage);
     setOffset((selectedPage + 1) * videosPerPage);
   };
@@ -89,9 +89,6 @@ function App() {
           handlePageClick={handlePageClick}
           currentPage={currentPage}
         />
-        {videos?.length !== 0 && (
-          <LoadButton onClick={handleSubmit}>Load more</LoadButton>
-        )}
       </div>
     </>
   );

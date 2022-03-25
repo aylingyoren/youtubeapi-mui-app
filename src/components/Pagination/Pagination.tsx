@@ -1,5 +1,9 @@
 import ReactPaginate from "react-paginate";
-import { PaginationDiv } from "../styled_components/PaginationDiv";
+import styled from "@emotion/styled";
+
+const PaginationDiv = styled.div`
+  margin: 7px 0 5px;
+`;
 
 const Pagination = ({
   pageCount,
