@@ -1,7 +1,6 @@
 import { Grid } from "@mui/material";
 import { Video } from "../../types/types";
 import VideoItem from "../VideoItem";
-import "./VideoList.css";
 
 const VideoList = ({
   videos,

@@ -6,7 +6,6 @@ export default function useVideoSearch(searchTerm: string) {
   const [currentTerm, setCurrentTerm] = useState<string>("");
   const [data, setData] = useState<Video[]>([]);
   const [nextPageToken, setNextPageToken] = useState<string>("");
-  const [prevPageToken, setPrevPageToken] = useState<string>("");
 
   const handleSubmit = async () => {
     if (!searchTerm) return;
@@ -25,14 +24,11 @@ export default function useVideoSearch(searchTerm: string) {
     setCurrentTerm(searchTerm);
     if (response.data.nextPageToken)
       setNextPageToken(response.data.nextPageToken);
-    if (response.data.prevPageToken)
-      setPrevPageToken(response.data.prevPageToken);
     return response.data.items;
   };
 
   return {
     data,
     handleSubmit,
-    prevPageToken,
   };
 }

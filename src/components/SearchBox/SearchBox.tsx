@@ -2,6 +2,13 @@ import { ChangeEvent, FormEvent } from "react";
 import { TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
+const searchIconStyle: Object = {
+  width: "50px",
+  fontSize: "50px",
+  cursor: "pointer",
+  marginLeft: "7px",
+};
+
 function SearchBox({
   handleFormSubmit,
   term,
@@ -28,10 +35,7 @@ function SearchBox({
           label="Search videos..."
           variant="outlined"
         />
-        <SearchIcon
-          sx={{ width: 50, fontSize: 50, cursor: "pointer", marginLeft: "7px" }}
-          onClick={handleSubmit}
-        />
+        <SearchIcon style={searchIconStyle} onClick={handleSubmit} />
       </form>
     </div>
   );

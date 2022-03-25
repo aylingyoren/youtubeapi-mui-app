@@ -6,7 +6,7 @@ import { Video } from "../../types/types";
 import Pagination from "../Pagination";
 import SearchBox from "../SearchBox";
 import Spinner from "../Spinner";
-import "./App.css";
+import { LoadButton } from "../styled_components/LoadButton";
 
 const VideoList = React.lazy(() => import("../VideoList"));
 const VideoDetail = React.lazy(() => import("../VideoDetail"));
@@ -19,7 +19,7 @@ function App() {
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [pageCount, setPageCount] = useState<number>(1);
-  const [offset, setOffset] = useState<number>(4);
+  const [offset, setOffset] = useState<number>(VIDEOS_PER_PAGE);
 
   const { data, handleSubmit } = useVideoSearch(term);
 
@@ -69,7 +69,7 @@ function App() {
   return (
     <>
       <h1>YouTube API App</h1>
-      <div className="search-page" {...handlers}>
+      <div {...handlers}>
         <SearchBox
           handleFormSubmit={handleSubmit}
           term={term}
@@ -89,9 +89,7 @@ function App() {
           currentPage={currentPage}
         />
         {videos?.length !== 0 && (
-          <button type="button" className="load-btn" onClick={handleSubmit}>
-            Load more
-          </button>
+          <LoadButton onClick={handleSubmit}>Load more</LoadButton>
         )}
       </div>
     </>

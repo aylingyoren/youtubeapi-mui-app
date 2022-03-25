@@ -1,7 +1,7 @@
 import ReactPaginate from "react-paginate";
-import "./Pagination.css";
+import { PaginationDiv } from "../styled_components/PaginationDiv";
 
-function Pagination({
+const Pagination = ({
   pageCount,
   handlePageClick,
   currentPage,
@@ -9,10 +9,10 @@ function Pagination({
   pageCount: number;
   handlePageClick: (selectedItem: { selected: number }) => void;
   currentPage: number;
-}) {
-  return (
-    <>
-      {pageCount > 0 && (
+}) => (
+  <>
+    {pageCount > 0 && (
+      <PaginationDiv>
         <ReactPaginate
           pageCount={pageCount}
           previousLabel={`<<`}
@@ -33,9 +33,9 @@ function Pagination({
           breakLinkClassName={`page-link`}
           activeClassName={`active`}
         />
-      )}
-    </>
-  );
-}
+      </PaginationDiv>
+    )}
+  </>
+);
 
 export default Pagination;
