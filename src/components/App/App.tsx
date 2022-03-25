@@ -1,6 +1,7 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useSwipeable } from "react-swipeable";
+import useHandleResize from "../../hooks/useHandleResize";
 import useVideoSearch from "../../hooks/useVideoSearch";
 import { Video } from "../../types/types";
 import Pagination from "../Pagination";
@@ -11,15 +12,15 @@ import { LoadButton } from "../styled_components/LoadButton";
 const VideoList = React.lazy(() => import("../VideoList"));
 const VideoDetail = React.lazy(() => import("../VideoDetail"));
 
-const VIDEOS_PER_PAGE: number = 4;
-
 function App() {
+  const { videosPerPage } = useHandleResize();
+
   const [term, setTerm] = useState<string>("");
   const [videos, setVideos] = useState<Video[]>([]);
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [pageCount, setPageCount] = useState<number>(1);
-  const [offset, setOffset] = useState<number>(VIDEOS_PER_PAGE);
+  const [offset, setOffset] = useState<number>(videosPerPage);
 
   const { data, handleSubmit } = useVideoSearch(term);
 
@@ -32,7 +33,7 @@ function App() {
   const handlePageClick = (e: { selected: number }) => {
     const selectedPage = e.selected;
     setCurrentPage(selectedPage);
-    setOffset((selectedPage + 1) * VIDEOS_PER_PAGE);
+    setOffset((selectedPage + 1) * videosPerPage);
   };
 
   const handlers = useSwipeable({
@@ -55,9 +56,9 @@ function App() {
   });
 
   useEffect(() => {
-    setPageCount(Math.ceil(data.length / VIDEOS_PER_PAGE));
-    setVideos(data.slice(offset - VIDEOS_PER_PAGE, offset));
-  }, [offset, data]);
+    setPageCount(Math.ceil(data.length / videosPerPage));
+    setVideos(data.slice(offset - videosPerPage, offset));
+  }, [offset, data, videosPerPage]);
 
   if (isLoading) return <Spinner />;
   if (error) return <div>Error occured: {error!.message}</div>;
