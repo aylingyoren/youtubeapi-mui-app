@@ -3,6 +3,12 @@ import styled from "@emotion/styled";
 
 const PaginationDiv = styled.div`
   margin: 7px 0 5px;
+
+  @media (min-width: 320px) and (max-width: 442px) {
+    .page-link {
+      padding: 7px;
+    }
+  }
 `;
 
 const Pagination = ({

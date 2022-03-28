@@ -3,11 +3,7 @@ import { Video } from "../../types/types";
 
 function VideoDetail({ video }: { video: Video | null }) {
   if (!video) {
-    return (
-      <div>
-        <h1>Enter search keyword(s) and press Enter...</h1>
-      </div>
-    );
+    return <div></div>;
   }
 
   const videoSrc = `https://www.youtube.com/embed/${video.id.videoId}`;

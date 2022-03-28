@@ -11,6 +11,8 @@ import Spinner from "../Spinner";
 const VideoList = React.lazy(() => import("../VideoList"));
 const VideoDetail = React.lazy(() => import("../VideoDetail"));
 
+export const centeredContent = { display: "flex", justifyContent: "center" };
+
 function App() {
   const { videosPerPage } = useHandleResize();
 
@@ -69,7 +71,7 @@ function App() {
 
   return (
     <>
-      <h1>YouTube API App</h1>
+      <h1 style={centeredContent}>YouTube API App</h1>
       <div {...handlers}>
         <SearchBox
           handleFormSubmit={handleSubmit}

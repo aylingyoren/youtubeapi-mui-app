@@ -15,7 +15,7 @@ const VideoList = ({
         container
         columns={{ xs: 1, md: 3, lg: 4 }}
         direction="row"
-        justifyContent="flex-start"
+        justifyContent="center"
         alignItems="flex-start"
         spacing={2}
       >

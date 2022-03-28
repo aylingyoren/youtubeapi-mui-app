@@ -1,6 +1,8 @@
 import { ChangeEvent, FormEvent } from "react";
 import { TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { centeredContent } from "../App/App";
+import styled from "@emotion/styled";
 
 const searchIconStyle: Object = {
   width: "50px",
@@ -8,6 +10,19 @@ const searchIconStyle: Object = {
   cursor: "pointer",
   marginLeft: "7px",
 };
+
+const SearchBoxDiv = styled.div`
+  margin: 20px 0;
+
+  @media (max-width: 340px) {
+    .searchbox {
+      width: 200px;
+    }
+    #outlined-basic-helper-text {
+      text-align: center;
+    }
+  }
+`;
 
 function SearchBox({
   handleFormSubmit,
@@ -26,16 +41,20 @@ function SearchBox({
     handleFormSubmit();
   };
   return (
-    <div>
+    <div style={centeredContent}>
       <form onSubmit={handleSubmit}>
-        <TextField
-          onChange={handleChange}
-          value={term}
-          id="outlined-basic"
-          label="Search videos..."
-          variant="outlined"
-        />
-        <SearchIcon style={searchIconStyle} onClick={handleSubmit} />
+        <SearchBoxDiv>
+          <TextField
+            className="searchbox"
+            onChange={handleChange}
+            value={term}
+            id="outlined-basic"
+            label="Search videos..."
+            variant="outlined"
+            helperText="Enter search keyword(s) and press Enter..."
+          />
+          <SearchIcon style={searchIconStyle} onClick={handleSubmit} />
+        </SearchBoxDiv>
       </form>
     </div>
   );
