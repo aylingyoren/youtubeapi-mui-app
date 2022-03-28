@@ -2,7 +2,7 @@ import ReactPaginate from "react-paginate";
 import styled from "@emotion/styled";
 
 const PaginationDiv = styled.div`
-  margin: 7px 0 5px;
+  margin: 20px 0 5px;
 
   @media (min-width: 320px) and (max-width: 442px) {
     .page-link {

@@ -13,6 +13,8 @@ const VideoDetail = React.lazy(() => import("../VideoDetail"));
 
 export const centeredContent = { display: "flex", justifyContent: "center" };
 
+const headerStyle = Object.assign({}, centeredContent, { marginTop: "10px" });
+
 function App() {
   const { videosPerPage } = useHandleResize();
 
@@ -71,7 +73,7 @@ function App() {
 
   return (
     <>
-      <h1 style={centeredContent}>YouTube API App</h1>
+      <h1 style={headerStyle}>YouTube API App</h1>
       <div {...handlers}>
         <SearchBox
           handleFormSubmit={handleSubmit}

@@ -7,7 +7,6 @@ import { Video } from "../../types/types";
 
 const textOverflow: Object = {
   whiteSpace: "nowrap",
-  width: "300px",
   overflow: "hidden",
   textOverflow: "ellipsis",
 };
@@ -20,8 +19,8 @@ function VideoItem({
   handleVideoSelect: Function;
 }) {
   return (
-    <div style={{ width: "345px" }}>
-      <Card onClick={() => handleVideoSelect(video)} sx={{ maxWidth: 345 }}>
+    <div style={{ width: "320px" }}>
+      <Card onClick={() => handleVideoSelect(video)} sx={{ maxWidth: 320 }}>
         <CardActionArea sx={{ height: 400 }}>
           <CardMedia
             sx={{ position: "absolute", top: 0 }}
