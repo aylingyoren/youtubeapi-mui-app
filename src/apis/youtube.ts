@@ -11,18 +11,10 @@ export const youtubeSearch = axios.create({
   },
 });
 
-const youtubeGetStatistics = axios.create({
+export const youtubeGetStatistics = axios.create({
   baseURL: BASE_URL,
   params: {
     part: "statistics",
     key: process.env.REACT_APP_API_KEY,
   },
 });
-
-export const showStatistics = (id: string) => {
-  return youtubeGetStatistics.get("/videos", {
-    params: {
-      id: id,
-    },
-  });
-};

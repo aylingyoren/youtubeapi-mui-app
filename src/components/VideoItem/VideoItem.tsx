@@ -4,8 +4,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea, Tooltip } from "@mui/material";
 import { Video } from "../../types/types";
-import { useEffect, useState } from "react";
-import { showStatistics } from "../../apis/youtube";
+import useGetViewCount from "../../hooks/useGetViewCount";
 
 export const textOverflow: Object = {
   whiteSpace: "nowrap",
@@ -20,15 +19,7 @@ function VideoItem({
   video: Video;
   handleVideoSelect: Function;
 }) {
-  const [viewCount, setViewCount] = useState<number>(0);
-
-  useEffect(() => {
-    const getViewCount = async () => {
-      const response = await showStatistics(video.id.videoId);
-      setViewCount(response.data.items[0].statistics.viewCount);
-    };
-    getViewCount();
-  });
+  const { viewCount } = useGetViewCount(video.id.videoId);
 
   return (
     <div style={{ width: "320px" }}>
