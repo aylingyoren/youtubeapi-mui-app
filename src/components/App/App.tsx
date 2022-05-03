@@ -9,7 +9,6 @@ import SearchBox from "../SearchBox";
 import Spinner from "../Spinner";
 
 const VideoList = React.lazy(() => import("../VideoList"));
-const VideoDetail = React.lazy(() => import("../VideoDetail"));
 
 export const centeredContent = { display: "flex", justifyContent: "center" };
 
@@ -20,7 +19,6 @@ function App() {
 
   const [term, setTerm] = useState<string>("");
   const [videos, setVideos] = useState<Video[]>([]);
-  const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [pageCount, setPageCount] = useState<number>(1);
   const [offset, setOffset] = useState<number>(videosPerPage);
@@ -67,10 +65,6 @@ function App() {
   if (isLoading) return <Spinner />;
   if (error) return <div>Error occured: {error!.message}</div>;
 
-  const handleVideoSelect = (video: Video) => {
-    setSelectedVideo(video);
-  };
-
   return (
     <>
       <h1 style={headerStyle}>YouTube API App</h1>
@@ -80,12 +74,9 @@ function App() {
           term={term}
           setTerm={setTerm}
         />
-        <Suspense fallback={<Spinner />}>
-          <VideoDetail video={selectedVideo} />
-        </Suspense>
         {data.length !== 0 && (
           <Suspense fallback={<Spinner />}>
-            <VideoList handleVideoSelect={handleVideoSelect} videos={videos} />
+            <VideoList videos={videos} />
           </Suspense>
         )}
         <Pagination

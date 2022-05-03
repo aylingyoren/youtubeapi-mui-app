@@ -2,13 +2,7 @@ import { Grid } from "@mui/material";
 import { Video } from "../../types/types";
 import VideoItem from "../VideoItem";
 
-const VideoList = ({
-  videos,
-  handleVideoSelect,
-}: {
-  videos: Video[] | undefined;
-  handleVideoSelect: Function;
-}) => {
+const VideoList = ({ videos }: { videos: Video[] | undefined }) => {
   return (
     <>
       <Grid
@@ -22,11 +16,7 @@ const VideoList = ({
         {videos?.map((video: Video) => {
           return (
             <Grid item key={video.id.videoId}>
-              <VideoItem
-                key={video.id.videoId}
-                video={video}
-                handleVideoSelect={handleVideoSelect}
-              />
+              <VideoItem key={video.id.videoId} video={video} />
             </Grid>
           );
         })}

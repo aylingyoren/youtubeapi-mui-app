@@ -6,7 +6,7 @@ const PaginationDiv = styled.div`
 
   @media (min-width: 320px) and (max-width: 442px) {
     .page-link {
-      padding: 7px;
+      padding: 5px;
     }
   }
 `;
@@ -29,7 +29,7 @@ const Pagination = ({
           nextLabel={`>>`}
           breakLabel={`...`}
           marginPagesDisplayed={2}
-          pageRangeDisplayed={3}
+          pageRangeDisplayed={2}
           onPageChange={handlePageClick}
           forcePage={currentPage}
           containerClassName={`pagination justify-content-center`}
