@@ -9,7 +9,7 @@ export default function useHandleResize() {
   });
 
   const countCards = (width: number) => {
-    if (width > 1280) return 4;
+    if (width > 1370) return 4;
     if (width > 1092) return 3;
     if (width > 768) return 2;
     return 1;
