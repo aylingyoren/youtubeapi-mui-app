@@ -68,7 +68,9 @@ function VideoItem({
               </Typography>
             </Tooltip>
             <p>{video.snippet.channelTitle}</p>
-            <p>{video.snippet.publishedAt}</p>
+            <p>
+              Published {video.snippet.publishedAt.toString().substring(0, 10)}
+            </p>
             <p>{viewCount} times watched</p>
           </CardContent>
         </CardActionArea>
