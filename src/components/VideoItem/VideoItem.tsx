@@ -4,8 +4,10 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea, Tooltip } from "@mui/material";
 import { Video } from "../../types/types";
+import { useEffect, useState } from "react";
+import { showStatistics } from "../../apis/youtube";
 
-const textOverflow: Object = {
+export const textOverflow: Object = {
   whiteSpace: "nowrap",
   overflow: "hidden",
   textOverflow: "ellipsis",
@@ -18,10 +20,27 @@ function VideoItem({
   video: Video;
   handleVideoSelect: Function;
 }) {
+  const [viewCount, setViewCount] = useState<number>(0);
+
+  useEffect(() => {
+    const getViewCount = async () => {
+      const response = await showStatistics(video.id.videoId);
+      setViewCount(response.data.items[0].statistics.viewCount);
+    };
+    getViewCount();
+  });
+
   return (
     <div style={{ width: "320px" }}>
-      <Card onClick={() => handleVideoSelect(video)} sx={{ maxWidth: 320 }}>
-        <CardActionArea sx={{ height: 400 }}>
+      <Card
+        className="videoitem-card"
+        onClick={() => handleVideoSelect(video)}
+        sx={{ maxWidth: 320 }}
+      >
+        <CardActionArea
+          className="videoitem-action"
+          sx={{ height: 400, cursor: "grab" }}
+        >
           <CardMedia
             sx={{ position: "absolute", top: 0 }}
             component="img"
@@ -50,7 +69,7 @@ function VideoItem({
             </Tooltip>
             <p>{video.snippet.channelTitle}</p>
             <p>{video.snippet.publishedAt}</p>
-            <p>{video.statistics?.viewCount}</p>
+            <p>{viewCount} times watched</p>
           </CardContent>
         </CardActionArea>
       </Card>

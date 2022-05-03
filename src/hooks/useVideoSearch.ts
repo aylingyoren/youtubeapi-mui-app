@@ -1,5 +1,5 @@
 import { useState } from "react";
-import youtube from "../apis/youtube";
+import { youtubeSearch } from "../apis/youtube";
 import { Video } from "../types/types";
 
 export default function useVideoSearch(searchTerm: string) {
@@ -9,7 +9,7 @@ export default function useVideoSearch(searchTerm: string) {
 
   const handleSubmit = async () => {
     if (!searchTerm) return;
-    const response = await youtube.get("/search", {
+    const response = await youtubeSearch.get("/search", {
       params: {
         type: "video",
         q: searchTerm,
